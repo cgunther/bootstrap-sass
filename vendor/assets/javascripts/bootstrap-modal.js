@@ -73,8 +73,8 @@
           that.enforceFocus()
 
           transition ?
-            that.$element.one($.support.transition.end, function () { that.$element.focus().trigger('shown') }) :
-            that.$element.focus().trigger('shown')
+            that.$element.one($.support.transition.end, function () { that.$element.trigger('focus').trigger('shown') }) :
+            that.$element.trigger('focus').trigger('shown')
 
         })
       }
@@ -109,7 +109,7 @@
         var that = this
         $(document).on('focusin.modal', function (e) {
           if (that.$element[0] !== e.target && !that.$element.has(e.target).length) {
-            that.$element.focus()
+            that.$element.trigger('focus')
           }
         })
       }
@@ -162,7 +162,7 @@
           this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
             .appendTo(document.body)
 
-          this.$backdrop.click(
+          this.$backdrop.on('click',
             this.options.backdrop == 'static' ?
               $.proxy(this.$element[0].focus, this.$element[0])
             : $.proxy(this.hide, this)
@@ -240,7 +240,7 @@
     $target
       .modal(option)
       .one('hide', function () {
-        $this.focus()
+        $this.trigger('focus')
       })
   })
 
